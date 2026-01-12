@@ -14,5 +14,8 @@ libdrm-devel
 git
 cmake
 ninja-build
+eigen3-devel
+glslang-devel
 meson
 python3
+glslang
