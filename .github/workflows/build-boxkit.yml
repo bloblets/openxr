@@ -29,7 +29,7 @@ jobs:
       matrix:
         containerfile: 
           - boxkit
-          - fedora-example # Included as an example to demonstrate multi-image builds, uncomment to build the fedora-example container too
+       #- fedora-example # Included as an example to demonstrate multi-image builds, uncomment to build the fedora-example container too
     steps:
       # Clone code to runner
       - name: Checkout
@@ -93,13 +93,12 @@ jobs:
 
       - name: Sign container image
         if: github.event_name != 'pull_request'
+        run: |
+          cosign sign -y --key env://COSIGN_PRIVATE_KEY ${{ steps.registry_case.outputs.lowercase }}/${{ matrix.containerfile }}@${TAGS}
         env:
           TAGS: ${{ steps.push.outputs.digest }}
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
-          COSIGN_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}  # Add this
-        run: |
-          cosign sign --key env://COSIGN_PRIVATE_KEY ${{ steps.registry_case.outputs.lowercase }}/${{ matrix.containerfile }}@${TAGS}
 
       - name: Echo outputs
         run: |
