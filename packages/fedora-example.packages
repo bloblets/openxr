@@ -37,6 +37,10 @@ wayland-protocols-devel
 hidapi-devel
 openssl-devel
 glib2-devel
+graphene-devel
+gtk4-devel
+vte291-gtk4-devel
+libadwaita-devel
 
 ModemManager-glib
 adwaita-cursor-theme
