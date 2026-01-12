@@ -16,6 +16,17 @@ cmake
 ninja-build
 eigen3-devel
 glslang-devel
+libusb1-devel
+python3-devel
 meson
 python3
 glslang
+rust 
+cargo
+clang
+clang-devel
+llvm-devel
+spirv-tools
+spirv-llvm-tools
+glslc
+opencomposite
