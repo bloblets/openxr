@@ -30,6 +30,10 @@ spirv-tools
 spirv-llvm-tools
 glslc
 lsusb
+libbsd-devel
+SDL2-devel
+wayland-devel
+wayland-protocols-devel
 
 ModemManager-glib
 adwaita-cursor-theme
