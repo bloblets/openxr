@@ -8,7 +8,7 @@ from pathlib import Path
 
 # CHANGE THESE IF NEEDED
 REPO_URL = "https://gitlab.com/gabmus/envision.git"
-PREFIX = "/usr/local/bin"
+PREFIX = "/usr/bin"
 
 
 def run(cmd, cwd=None):
