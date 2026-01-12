@@ -36,7 +36,7 @@ wayland-devel
 wayland-protocols-devel
 hidapi-devel
 openssl-devel
-pkg-config
+glib2-devel
 
 ModemManager-glib
 adwaita-cursor-theme
