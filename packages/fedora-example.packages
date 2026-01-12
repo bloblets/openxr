@@ -35,6 +35,8 @@ SDL2-devel
 wayland-devel
 wayland-protocols-devel
 hidapi-devel
+openssl-devel
+pkg-config
 
 ModemManager-glib
 adwaita-cursor-theme
