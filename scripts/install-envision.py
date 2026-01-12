@@ -6,9 +6,9 @@ import sys
 import tempfile
 from pathlib import Path
 
+# CHANGE THESE IF NEEDED
 REPO_URL = "https://gitlab.com/gabmus/envision.git"
-BIN_NAME = "envision"
-INSTALL_PATH = Path("/usr/local/bin") / BIN_NAME
+PREFIX = "/usr/local/bin"
 
 
 def run(cmd, cwd=None):
@@ -17,33 +17,44 @@ def run(cmd, cwd=None):
 
 
 def list_tags():
-    run(["git", "ls-remote", "--tags", REPO_URL])
+    run(["git", "ls-remote", "--tags", "--refs", REPO_URL])
 
 
 def install(tag=None, branch=None):
     with tempfile.TemporaryDirectory() as tmp:
         repo_dir = Path(tmp) / "envision"
+        build_dir = repo_dir / "build"
 
+        # Clone repo
         run(["git", "clone", REPO_URL, str(repo_dir)])
 
+        # Checkout tag or branch
         if tag:
             run(["git", "checkout", f"tags/{tag}"], cwd=repo_dir)
         elif branch:
             run(["git", "checkout", branch], cwd=repo_dir)
 
-        src = repo_dir / BIN_NAME
+        # Configure with meson
+        run([
+            "meson",
+            "setup",
+            str(build_dir),
+            f"--prefix={PREFIX}",
+            "--buildtype=release",
+        ], cwd=repo_dir)
 
-        if not src.exists():
-            sys.exit(f"Error: {BIN_NAME} not found in repository root")
+        # Build
+        run(["ninja", "-C", str(build_dir)])
 
-        run(["install", "-m", "0755", str(src), str(INSTALL_PATH)])
+        # Install
+        run(["ninja", "-C", str(build_dir), "install"])
 
-        print(f"\nInstalled {BIN_NAME} to {INSTALL_PATH}")
+        print(f"\nEnvision installed to {PREFIX}/bin")
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Install Envision into /usr/local/bin"
+        description="Build and install Envision using Meson/Ninja"
     )
 
     parser.add_argument(
@@ -54,12 +65,12 @@ def main():
 
     parser.add_argument(
         "--tag",
-        help="Install a specific git tag",
+        help="Build and install a specific git tag",
     )
 
     parser.add_argument(
         "--branch",
-        help="Install a specific branch (default: repo default)",
+        help="Build and install from a specific branch",
     )
 
     args = parser.parse_args()
