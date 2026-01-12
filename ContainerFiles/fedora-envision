@@ -11,10 +11,10 @@ COPY ../scripts/distrobox-shims.sh /
 COPY ../packages/fedora-example.packages /
 
 # Copy your Python script
-COPY ../scripts/mytool.py /tmp/mytool
+COPY ../scripts/install-envision.py /tmp/install-envision
 
 # Run setup and install the tool
 RUN chmod +x fedora-example.sh distrobox-shims.sh \
     && /fedora-example.sh \
-    && install -m 0755 /tmp/mytool /usr/local/bin/mytool \
-    && rm /fedora-example.sh /distrobox-shims.sh /fedora-example.packages /tmp/mytool
+    && install -m 0755 /tmp/install-envision /usr/local/bin/install-envision \
+    && rm /fedora-example.sh /distrobox-shims.sh /fedora-example.packages /tmp/install-envision
