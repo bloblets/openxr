@@ -27,7 +27,6 @@ clang
 clang-devel
 llvm-devel
 spirv-tools
-spirv-llvm-tools
 glslc
 lsusb
 libbsd-devel
